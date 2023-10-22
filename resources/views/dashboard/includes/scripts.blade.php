@@ -8,6 +8,8 @@
 
 
 @yield('scripts')
+@stack('scripts')
+
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.js')}}"></script>
 <!-- AdminLTE for demo purposes -->

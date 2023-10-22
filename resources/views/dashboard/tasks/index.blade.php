@@ -148,6 +148,8 @@
                 <div class="card-body" >
 
                     <div class="table-responsive " style="padding: 10px">
+
+                     
                         <table id="dataTable" class="table pt-3">
                             <thead>
                             <tr>
@@ -200,7 +202,8 @@
 <script>
    $(function () {
       //Initialize Select2 Elements
-      $('.select2').select2()
+      $('.select2').select2();
+      $('.filter').select2();
 
       
       //Date and time picker
@@ -240,12 +243,58 @@
                     { extend: 'copyHtml5', footer: true, orientation: 'landscape', pageSize: 'LEGAL' },
                     { extend: 'excelHtml5', footer: true, orientation: 'landscape', pageSize: 'LEGAL' },
                     { extend: 'csvHtml5', footer: true, orientation: 'landscape', pageSize: 'LEGAL' },
-                    { extend: 'pdfHtml5', footer: true, orientation: 'landscape', pageSize: 'LEGAL' }
+                    { extend: 'pdfHtml5', footer: true, orientation: 'landscape', pageSize: 'LEGAL' },
+                    {
+                text: 'Reload',
+                action: function (e, dt, node, config) {
+                  $('#dataTable').DataTable().ajax.reload();
+                }
+            },
+            {
+                text: ' <select class="form-control filter" name="filter" id="filter" style="width: 100%;">\
+                          <option selected disabled value="">Filter by project</option>\
+                          <option value="All">All</option>\
+                          @foreach ($projects as $project)\
+                          <option value="{{$project->id}}">{{$project->name}}</option>\
+                          @endforeach\
+                        </select>',
+                action: function (e, dt, node, config) {
+                    // Access the custom input field and its value
+                    $('#filter').on('change', function(){   
+
+                       filterTable();
+                     });
+                }
+            }
                 ],
+                 
                 //
 
             });
 
         });
+  </script>
+
+
+
+  <script>
+
+    function filterTable()
+    {
+          const table = $('#dataTable'); 
+        
+        
+        table.on('preXhr.dt', function(e,settings,data){
+    
+                data.filter = $('#filter').val();
+                
+        });
+    
+              table.DataTable().ajax.reload();
+            
+            return false;
+      
+
+    }
   </script>
 @endsection

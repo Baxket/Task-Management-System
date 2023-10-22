@@ -23,9 +23,24 @@ class TasksController extends Controller
 
         //display projects on datatable using ajax
         if ($request->ajax()){
-            //get all tasks
-            $tasks = Task::query()->with('project')->where('entered_by', auth()->id())
-           ->get();
+            //project is equal to the filter value
+            $project = $request->get('filter');
+
+           if($project == "All" || !$project)
+           {
+            
+                //if project filter is equal to all get all
+                $tasks = Task::query()->with('project')->where('entered_by', auth()->id())
+                ->get();
+           }
+           else
+           {
+                //get tasks of the project filter
+
+                $tasks = Task::query()->with('project')->where('project_id', $project)->where('entered_by', auth()->id())
+                ->get();
+           }
+
             try {
                 return Datatables::of($tasks)
                     ->addIndexColumn()
