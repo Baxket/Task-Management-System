@@ -2,15 +2,12 @@
 <!-- jQuery -->
 <script src="{{ asset('vendor/jquery/jquery.min.js')}}"></script>
 
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-  $.widget.bridge('uibutton', $.ui.button)
-</script>
+
 <!-- Bootstrap 4 -->
 <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
 
-
+@yield('scripts')
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
@@ -55,4 +52,3 @@
    @endif
 </script>
 
-@yield('scripts')

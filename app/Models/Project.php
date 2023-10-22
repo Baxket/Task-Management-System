@@ -14,5 +14,15 @@ class Project extends Model
         'entered_by',    
     ];
 
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'entered_by');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany( Task::class);
+    }
     
 }

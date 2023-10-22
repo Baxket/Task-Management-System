@@ -10,12 +10,11 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
  
+    @yield('styles')
 
  
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css')}}">
-    <!-- overlayScrollbars -->
-    <link rel="stylesheet" href="{{ asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
  
-    @yield('styles')
+ 
   </head>

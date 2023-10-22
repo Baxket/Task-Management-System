@@ -51,6 +51,25 @@
             
             </ul>
           </li>
+
+          <li class="nav-item @if(str_contains(url()->current(), 'admin/tasks')) menu-open  @endif">
+            <a href="#" class="nav-link @if(str_contains(url()->current(), 'admin/tasks')) active  @endif">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Tasks
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route("admin.tasks.create")}}" class="nav-link @if(str_contains(url()->current(), 'admin/tasks/index')) active  @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create Tasks</p>
+                </a>
+              </li>
+            
+            </ul>
+          </li>
        
          
         </ul>

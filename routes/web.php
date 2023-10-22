@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TasksController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\DashboardController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
@@ -41,6 +42,17 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function ()
     {
         Route::get('/manage', [ProjectsController::class, 'index'])->name('manage');
         Route::post('/store', [ProjectsController::class, 'store'])->name('store');
+
+    });
+
+    Route::prefix('tasks')->name('tasks.')->group(function ()
+    {
+        Route::get('/index', [TasksController::class, 'index'])->name('create');
+        Route::get('/edit/{id}', [TasksController::class, 'edit_page'])->name('edit_page');
+        Route::patch('/update/{task}', [TasksController::class, 'update'])->name('update');
+
+        Route::get('/sort', [TasksController::class, 'index'])->name('sort');
+        Route::post('/store', [TasksController::class, 'store'])->name('store');
 
     });
 
