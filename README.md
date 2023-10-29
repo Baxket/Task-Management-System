@@ -66,7 +66,7 @@ To run this project, ensure that you have the following prerequisites installed 
 6. **Run Database Migrations:**
 
     Start the Laravel development server by entering this command.
-       ```bash
+    ```bash
     php artisan serve
     ```
     The application will be accessible at http://localhost:8000.
