@@ -168,10 +168,11 @@
   $(function () {
       $("#sortable-list").sortable({
           update: function (event, ui) {
+            //get ids of every tasks
               var tasks = $(this).sortable('toArray', { attribute: 'data-id' });
               var ids = $.grep(tasks, (task) => task !== "");
 
-
+          
         let _token = $('meta[name="csrf-token"]').attr('content');
 
 
@@ -181,12 +182,14 @@
                 project_id: {{$filter}}
             })
             .done(function (response) {
+
+              // update the priorities at the front end
               $('#sortable-list').children('.list-group-item').each(function (index, task) {
                     $(task).children('#priority').text('#'+response.priorities[$(task).data('id')])
                 });
             })
             .fail(function (response) {
-                alert('Error occured while sending reorder request');
+              Notiflix.Notify.failure('something wrong happened');
             });
           }
       });

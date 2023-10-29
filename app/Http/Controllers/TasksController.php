@@ -155,8 +155,10 @@ class TasksController extends Controller
      {
  
 
+        //get project filter request
         $filter = $request->filter;
 
+        
         if($filter)
         {
             $tasks = Task::where('entered_by', auth()->id())->where('project_id', $filter)->orderBy('priority')->get();
@@ -174,13 +176,14 @@ class TasksController extends Controller
      public function resort(Request $request)
      {
 
+        //validate request inouts
         $request->validate([
             'ids'         => 'required|array',
             'ids.*'       => 'integer',
             'project_id' => 'required|integer|exists:projects,id',
         ]);
 
-
+        //update priorities of task for the filtered project
         foreach ($request->ids as $index => $id) {
             Task::where('entered_by', auth()->id())
                 ->where("project_id", $request->project_id)
@@ -190,6 +193,7 @@ class TasksController extends Controller
                 ]);
         }
    
+        //get the current priorities
         $priorities = Project::find($request->project_id)
             ->tasks()
             ->pluck('priority', 'id');

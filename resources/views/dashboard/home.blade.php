@@ -30,6 +30,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
+                {{-- Count Projects --}}
                 <h3>{{App\Models\Project::where('entered_by', auth()->id())->count()}}</h3>
 
                 <p>Projects</p>
@@ -45,6 +46,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
+                {{-- Count Taks  --}}
                 <h3>{{App\Models\Task::where('entered_by', auth()->id())->count()}}</h3>
 
                 <p>Tasks</p>
