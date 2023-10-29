@@ -28,7 +28,7 @@ To run this project, ensure that you have the following prerequisites installed 
    Extract the zip file to get all the files or if from github, clone it and open it with vsCode.
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Baxket/Task-Management-System
    cd <your-project-directory>
     ```
 2. **Install PHP Dependencies:**
