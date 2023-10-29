@@ -23,6 +23,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/login_post', [AuthController::class, 'authenticate'])->name('login_post');
 });
 
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::get('/register', [AuthController::class, 'register_page'])->name('register_page');
 Route::post('/register', [AuthController::class, 'store'])->name('store');
 
@@ -47,12 +49,23 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function ()
 
     Route::prefix('tasks')->name('tasks.')->group(function ()
     {
+        //index page
         Route::get('/index', [TasksController::class, 'index'])->name('create');
+
+        //edit page
         Route::get('/edit/{id}', [TasksController::class, 'edit_page'])->name('edit_page');
+
+        //update task
         Route::patch('/update/{task}', [TasksController::class, 'update'])->name('update');
 
-        Route::get('/sort', [TasksController::class, 'index'])->name('sort');
+        //sort
+        Route::get('/sort', [TasksController::class, 'sort_index'])->name('sort_index');
+        Route::post('/resort', [TasksController::class, 'resort'])->name('resort');
+
+        //store task or create task
         Route::post('/store', [TasksController::class, 'store'])->name('store');
+
+
 
     });
 

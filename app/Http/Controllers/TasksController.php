@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Task;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Crypt;
 
@@ -30,7 +31,7 @@ class TasksController extends Controller
            {
             
                 //if project filter is equal to all get all
-                $tasks = Task::query()->with('project')->where('entered_by', auth()->id())
+                $tasks = Task::query()->with('project')->orderBy('priority')->where('entered_by', auth()->id())
                 ->get();
            }
            else
@@ -38,6 +39,7 @@ class TasksController extends Controller
                 //get tasks of the project filter
 
                 $tasks = Task::query()->with('project')->where('project_id', $project)->where('entered_by', auth()->id())
+                ->orderBy('priority')
                 ->get();
            }
 
@@ -147,4 +149,52 @@ class TasksController extends Controller
             return redirect()->route('admin.tasks.create')->with('success', "Task was updated successfully");
 
      }
+
+
+     public function sort_index(Request $request)
+     {
+ 
+
+        $filter = $request->filter;
+
+        if($filter)
+        {
+            $tasks = Task::where('entered_by', auth()->id())->where('project_id', $filter)->orderBy('priority')->get();
+        }
+        else{
+            $tasks = Null;
+        }
+         //get projects
+         $projects = Project::where('entered_by', auth()->id())->get();
+ 
+        
+         return view('dashboard.tasks.sort', compact('projects', 'tasks', 'filter'));
+     }
+
+     public function resort(Request $request)
+     {
+
+        $request->validate([
+            'ids'         => 'required|array',
+            'ids.*'       => 'integer',
+            'project_id' => 'required|integer|exists:projects,id',
+        ]);
+
+
+        foreach ($request->ids as $index => $id) {
+            Task::where('entered_by', auth()->id())
+                ->where("project_id", $request->project_id)
+                ->where('id', $id)
+                ->update([
+                    'priority' => $index + 1
+                ]);
+        }
+   
+        $priorities = Project::find($request->project_id)
+            ->tasks()
+            ->pluck('priority', 'id');
+
+        return response(compact('priorities'), Response::HTTP_OK);
+     }
+    
 }

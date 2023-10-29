@@ -11,8 +11,10 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       
-        <div class="info">
-          <a href="#" class="d-block">{{auth()->user()->name}}</a>
+        <div class="info justify-content-center">
+
+          <h4 style="color: #ffff">{{auth()->user()->name}}</h4>
+          <a href="{{ route('logout') }}" class="btn btn-block btn-default">Logout</a>
         </div>
       </div>
 
@@ -60,15 +62,22 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
+             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{route("admin.tasks.create")}}" class="nav-link @if(str_contains(url()->current(), 'admin/tasks/index')) active  @endif">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Create Tasks</p>
+                  <p>Manage Tasks</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route("admin.tasks.sort_index")}}" class="nav-link @if(str_contains(url()->current(), 'admin/tasks/sort')) active  @endif">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Sort Tasks</p>
                 </a>
               </li>
             
             </ul>
+            
           </li>
        
          
